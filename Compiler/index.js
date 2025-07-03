@@ -2,8 +2,12 @@ const express = require('express');
 const app = express();
 const PORT = 5000;
 const {generateFile} = require('./generateFile')
+const {generateInputFile} = require('./generateInputFile')
 const cors = require('cors');
 const {executeCpp} = require('./executeCpp')
+const {generateAiResponse} = require('./generateAiResponse')
+const removeMarkdown = require('remove-markdown');
+
 
 app.use(express.urlencoded({extended:false}));
 app.use(cors());
@@ -17,7 +21,7 @@ app.get('/',(req,res)=>{
 
 app.post('/run', async(req,res)=>{
     
-    const {language = 'cpp',code} = req.body;
+    const {language = 'cpp',code, input} = req.body;
 
     if(code === undefined)
     {
@@ -29,7 +33,8 @@ app.post('/run', async(req,res)=>{
 
     try {
        const filePath = generateFile(language,code);
-       const output = await executeCpp(filePath);
+       const inputFile = generateInputFile(input);
+       const output = await executeCpp(filePath,inputFile);
        res.json({output});
 
 
@@ -43,6 +48,29 @@ app.post('/run', async(req,res)=>{
     }
 
      
+
+})
+
+app.post('/ai-review',async (req,res)=>{
+    const {code} = req.body;
+    if(code === undefined)
+    {
+        return res.status(404).json({
+            success : 'false',
+            error : 'empty code body'
+        });
+    }
+    try {
+        const aiResponse = await generateAiResponse(code);
+        res.json({
+            success : true,
+            aiResponse : removeMarkdown(aiResponse)
+        })
+        
+    } catch (error) {
+        console.error('Error executing code : ', error.message);
+        
+    }
 
 })
 

@@ -10,7 +10,7 @@ if(!fs.existsSync(outputPath))
 }
 
 
-const executeCpp = async(filepath)=>{
+const executeCpp = async(filepath,inputFile)=>{
 
     const jobId = path.basename(filepath).split('.')[0];//to extract first unique id of our code file.
     const outpath = path.join(outputPath,`${jobId}.out`);
@@ -18,7 +18,7 @@ const executeCpp = async(filepath)=>{
 
     return new Promise((resolve,reject)=> {
 
-        exec(`cd ${dr} && g++ ${filepath} -o ${outpath} && ${outpath}`,(error,stdout,stderr)=>{
+        exec(`cd ${dr} && g++ ${filepath} -o ${outpath} && ${outpath} < ${inputFile}`,(error,stdout,stderr)=>{
             if(error){
                 reject({error,stderr});
             }
