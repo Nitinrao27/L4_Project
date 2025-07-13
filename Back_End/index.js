@@ -8,6 +8,8 @@ const PORT = 3000;
 
 //import routers
 const userRoute = require('./routes/user');
+const oauthreq = require('./routes/requests');
+const oauthcred = require('./routes/oauth');
 
 //connect to mongo.
 const {connectToDb} = require('./connect');
@@ -28,6 +30,8 @@ const {connectToDb} = require('./connect');
  //go in routes and controller function.
 
  app.use('/',userRoute);
+ app.use('/auth/google',oauthcred);
+ app.use('/request-google',oauthreq);
 
 
 

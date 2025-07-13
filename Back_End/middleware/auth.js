@@ -10,7 +10,9 @@ async function restrictToLoggedinUserOnly(req,res,next)
     const user = getUser(tkn);
     if(!user) return res.redirect('/login');
 
-    req.user = user;//don't know the meaning?
+    req.user = user;
+    // console.log(req.user);
+    
     next();
 }
 

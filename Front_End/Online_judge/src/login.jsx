@@ -38,6 +38,22 @@ const Login = () => {
 
   }
 
+  const handleGoogleLogin = async () => {
+  try {
+    const res = await fetch('http://localhost:3000/request-google', {
+      method: 'POST',
+      credentials: 'include'
+    });
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    }
+  } catch (error) {
+    console.error('Error starting Google login', error);
+    alert('Failed to start Google login');
+  }
+};
+
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-100 to-blue-300">
@@ -66,6 +82,15 @@ const Login = () => {
         <div className="text-center mt-4">
           <input className="bg-green-600 text-white rounded-lg w-1/2 h-10 cursor-pointer hover:bg-green-700" type="submit" value="LOGIN" />
         </div>
+        <div className="text-center mt-4">
+  <button
+    type="button"
+    onClick={handleGoogleLogin}
+    className="bg-red-500 text-white rounded-lg w-1/2 h-10 hover:bg-red-600"
+  >
+    Continue with Google
+  </button>
+</div>
       </form>
     </div>
   );

@@ -27,6 +27,22 @@ function Signup() {
       navigate('/login');
     }
   };
+
+  const handleGoogleLogin = async () => {
+  try {
+    const res = await fetch('http://localhost:3000/request-google', {
+      method: 'POST',
+      credentials: 'include'
+    });
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    }
+  } catch (error) {
+    console.error('Error starting Google login', error);
+    alert('Failed to start Google login');
+  }
+};
   
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-100 to-blue-300">
@@ -75,9 +91,17 @@ function Signup() {
         </div>
         <div className="text-center mt-4">
             <span>Already a user?</span>
-            <button className="ml-2 bg-gray-900 text-yellow-300 rounded p-2 hover:bg-gray-800">
+            <button className="ml-2 mb-2 bg-gray-900 text-yellow-300 rounded p-2 hover:bg-gray-800">
               <a href="/login">LOGIN</a>
             </button>
+            <hr className='mb-2' />
+            <button
+    type="button"
+    onClick={handleGoogleLogin}
+    className="bg-red-500 text-white rounded-lg w-1/2 h-10 hover:bg-red-600"
+  >
+    Continue with Google
+  </button>
         </div>
       </form>
     </div>

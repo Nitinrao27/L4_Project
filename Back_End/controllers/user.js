@@ -41,7 +41,7 @@ async function HandleLogin(req, res) {
 async function injectQues(req,res)
 {
   const ques = await Ques.find();
-  return res.status(200).json({ques : ques});
+  return res.status(200).json({ques : ques, name : req.user.UserName});
 
 }
 async function HandleAddQuestion(req, res) {
