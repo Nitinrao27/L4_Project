@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose')
 const app = express();
 const PORT = 5000;
 const {generateFile} = require('./generateFile')
@@ -9,9 +10,15 @@ const {generateAiResponse} = require('./generateAiResponse')
 const removeMarkdown = require('remove-markdown');
 
 
+
+
 app.use(express.urlencoded({extended:false}));
 app.use(cors());
 app.use(express.json());
+
+
+
+
 
 
 
@@ -40,10 +47,10 @@ app.post('/run', async(req,res)=>{
 
     } catch (err) {
 
-        return res.status(500).json({
-            success : 'false',
-            error : err.message
-        })
+       return res.status(500).json({
+      success: 'false',
+      error: err.stderr || err.error?.message || 'Compilation or execution failed.'
+    });
         
     }
 
@@ -51,28 +58,34 @@ app.post('/run', async(req,res)=>{
 
 })
 
-app.post('/ai-review',async (req,res)=>{
-    const {code} = req.body;
-    if(code === undefined)
-    {
-        return res.status(404).json({
-            success : 'false',
-            error : 'empty code body'
-        });
-    }
-    try {
-        const aiResponse = await generateAiResponse(code);
-        res.json({
-            success : true,
-            aiResponse : removeMarkdown(aiResponse)
-        })
-        
-    } catch (error) {
-        console.error('Error executing code : ', error.message);
-        
-    }
+app.post('/ai-review', async (req, res) => {
+  const { code } = req.body;
 
-})
+  if (code === undefined) {
+    return res.status(404).json({
+      success: false,
+      error: 'empty code body'
+    });
+  }
+
+  try {
+    const aiResponse = await generateAiResponse(code);
+    res.json({
+      success: true,
+      aiResponse: removeMarkdown(aiResponse)
+    });
+  } catch (error) {
+    console.error('Error executing code:', error.message);
+    
+    // ✅ ADD THIS RESPONSE
+    return res.status(500).json({
+      success: false,
+      error: 'AI review failed',
+      message: error.message
+    });
+  }
+});
+//submit logic
 
 
 

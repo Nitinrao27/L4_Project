@@ -93,7 +93,7 @@ function Question() {
               {questions.map((item, index) => (
                 <li
                   key={item._id}
-                  onClick={() => navigate("/run")}
+                  onClick={() => navigate(`/run/${item._id}`)}
                   className="p-4 border border-gray-200 rounded-lg hover:shadow-md hover:bg-slate-50 transition duration-200 flex items-start cursor-pointer"
                 >
                   <span className="font-bold text-slate-600 mr-4">

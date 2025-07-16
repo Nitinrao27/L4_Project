@@ -2,6 +2,7 @@
 const User = require('../models/user');
 const {setUser} = require('../Auth');
 const Ques  = require('../models/question')
+const tests = require('../models/test_cases')
 
 async function HandleSignUp(req, res) {
   try {
@@ -46,9 +47,9 @@ async function injectQues(req,res)
 }
 async function HandleAddQuestion(req, res) {
   try {
-    const { Title, Description, Constraints, TestCases } = req.body;
+    const { Title, Description, Input, Output_Guide ,TestCases } = req.body;
 
-    await Ques.create({ Title, Description, Constraints, TestCases }); 
+    await Ques.create({ Title, Description,Input,Output_Guide,TestCases }); 
 
     return res.status(201).json({ msg: "Question added successfully" });
   } catch (error) {
@@ -84,6 +85,38 @@ async function HandleDeletionOfQues(req, res) {
   }
 }
 
+async function getQuestionDetails(req,res){
+
+  const qs = await Ques.findById(req.params.id);
+  res.json(qs);
+
+}
+async function handleTestCases(req, res) {
+  try {
+    const { questionId, testCases } = req.body;
+
+    if (!Array.isArray(testCases) || testCases.length === 0) {
+      return res.status(400).json({ error: "testCases array is required." });
+    }
+
+    // Prepare documents to insert
+    const documents = testCases.map(tc => ({
+      questionId,
+      input: tc.input,
+      expectedOutput: tc.expectedOutput
+    }));
+
+    await tests.insertMany(documents);
+
+    return res.status(201).json({ msg: "Test cases added successfully" });
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
+
 
 
 
@@ -93,6 +126,8 @@ module.exports = {
     injectQues,
     HandleAddQuestion,
     HandleDeletionOfQues,
-    HandleUpdateQues
+    HandleUpdateQues,
+    getQuestionDetails,
+    handleTestCases
 
 }

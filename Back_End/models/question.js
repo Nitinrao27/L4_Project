@@ -12,9 +12,14 @@ const quesSchema = mongoose.Schema({
         required : true,
         unique : true
     },
-    Constraints : {
+    Input : {
         type : [String],
         required : true
+    },
+    Output_Guide :{
+        type : String,
+        required : true
+
     },
     TestCases : [
         {
