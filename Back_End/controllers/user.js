@@ -33,7 +33,11 @@ async function HandleLogin(req, res) {
   }
   //creating jwt token.
   const token = setUser(user);
-  res.cookie('token',token);
+  res.cookie('token', token, {
+  httpOnly: true,
+  secure: true,            // Required on HTTPS
+  sameSite: 'None',        // Required for cross-origin cookies
+});
 
   return res.status(200).json({msg : 'logged In successfully'}); 
   // OR return res.redirect('/Dashboard')
