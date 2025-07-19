@@ -18,7 +18,7 @@ async function getUserData(access_token) {
 router.get("/callback", async (req, res) => {
   const code = req.query.code;
   try {
-    const redirectUrl = "http://localhost:3000/auth/google/callback";
+    const redirectUrl = "https://l4-project-back-end.onrender.com/auth/google/callback";
     const oAuth2Client = new OAuth2Client(
       process.env.CLIENT_ID,
       process.env.CLIENT_SECRET,
@@ -45,7 +45,7 @@ router.get("/callback", async (req, res) => {
 
     //  Set cookie or redirect with token
     res.cookie('token', myToken, { httpOnly: true, sameSite: 'lax' });
-    res.redirect('http://localhost:5173/Question');
+    res.redirect('https://onlinejudge-ecru.vercel.app/Question');
 
   } catch (error) {
     console.error(error);

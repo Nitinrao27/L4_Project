@@ -7,10 +7,10 @@ const { OAuth2Client } = require("google-auth-library");
 
 router.post("/", async function (req, res) {
   //deal with cors
-  res.header("Accesss-Control-Allow-Origin", "http://localhost:5173");
+  res.header("Accesss-Control-Allow-Origin", "https://onlinejudge-ecru.vercel.app");
   //as we are using simple : http.
   res.header("Referrer-Policy", "no-referrer-when-downgrade");
-  const redirectUrl = "http://localhost:3000/auth/google/callback";
+  const redirectUrl = "https://l4-project-back-end.onrender.com/auth/google/callback";
 
   const oAuth2Client = new OAuth2Client(
     process.env.CLIENT_ID,
