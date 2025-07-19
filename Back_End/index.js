@@ -23,7 +23,7 @@ const {connectToDb} = require('./connect');
 
  //some middleware stuff.
  app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: '*',
   credentials: true,
 }))
  app.use(express.json());
@@ -69,7 +69,7 @@ app.post('/submit', async (req, res) => {
 
       try {
         // Call your compiler server's /run endpoint
-        const response = await axios.post('http://compiler:5000/run', {
+        const response = await axios.post(`${process.env.COMPILER_URL}/run`, {
           code,
           input,
           language
