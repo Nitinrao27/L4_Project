@@ -23,7 +23,7 @@ const {connectToDb} = require('./connect');
 
  //some middleware stuff.
  app.use(cors({
-  origin: '*',
+  origin: 'https://l4-project-pi.vercel.app',
   credentials: true,
 }))
  app.use(express.json());
