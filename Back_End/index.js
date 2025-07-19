@@ -5,6 +5,8 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const Ques = require('./models/question')
 const tests = require('./models/test_cases')
+const dotenv = require("dotenv");
+dotenv.config();
 
 
 const PORT = 3000;
@@ -17,7 +19,7 @@ const oauthcred = require('./routes/oauth');
 //connect to mongo.
 const {connectToDb} = require('./connect');
 
- connectToDb('mongodb://host.docker.internal:27017/oj_db').then(()=> console.log('connected to mongodb successfully'));
+ connectToDb(process.env.MONGO_URI).then(()=> console.log('connected to mongodb successfully'));
 
  //some middleware stuff.
  app.use(cors({
