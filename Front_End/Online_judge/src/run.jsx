@@ -21,7 +21,7 @@ export default function Run() {
   useEffect(() => {
     async function fetchQuestion() {
       try {
-        const res = await fetch(`http://localhost:3000/Question/${id}`);
+        const res = await fetch(`https://l4-project-back-end.onrender.com/Question/${id}`);
         const data = await res.json();
         setQuestion(data);
       } catch (err) {
@@ -44,7 +44,7 @@ export default function Run() {
     setOutput('');
 
     try {
-      const res = await fetch('http://localhost:5000/run', {
+      const res = await fetch('https://l4-project-compiler.onrender.com/run', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ language, code, input, questionId: id }),
@@ -69,7 +69,7 @@ export default function Run() {
     setAiFeedback('');
 
     try {
-      const res = await fetch('http://localhost:5000/ai-review', {
+      const res = await fetch('https://l4-project-compiler.onrender.com/ai-review', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code }),
@@ -94,7 +94,7 @@ export default function Run() {
     setVerdict(null);
 
     try {
-      const res = await fetch('http://localhost:3000/submit', {
+      const res = await fetch('https://l4-project-back-end.onrender.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ questionId: id, code, language }),

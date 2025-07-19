@@ -11,7 +11,7 @@ const Login = () => {
   const subHandler = async (e)=>{
 
     e.preventDefault();
-    const res = await fetch('http://localhost:3000/login', {
+    const res = await fetch('https://l4-project-back-end.onrender.com/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ const Login = () => {
 
   const handleGoogleLogin = async () => {
   try {
-    const res = await fetch('http://localhost:3000/request-google', {
+    const res = await fetch('https://l4-project-back-end.onrender.com/request-google', {
       method: 'POST',
       credentials: 'include'
     });

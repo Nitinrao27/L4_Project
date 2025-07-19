@@ -8,7 +8,7 @@ function Question() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3000/Question", {
+    fetch("https://l4-project-back-end.onrender.com/Question", {
       method: "GET",
       credentials: "include",
     })

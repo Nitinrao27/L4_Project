@@ -10,7 +10,7 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch('http://localhost:3000/', {
+    const res = await fetch('https://l4-project-back-end.onrender.com/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ function Signup() {
 
   const handleGoogleLogin = async () => {
   try {
-    const res = await fetch('http://localhost:3000/request-google', {
+    const res = await fetch('https://l4-project-back-end.onrender.com/request-google', {
       method: 'POST',
       credentials: 'include'
     });
